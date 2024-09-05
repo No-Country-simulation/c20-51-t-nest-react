@@ -9,7 +9,10 @@ export class UserUpdateUseCase {
   constructor(private readonly userRepository: UsersRepository) {}
 
   async run(dto: IUserUpdate, id: string): Promise<string> {
+    console.log(dto);
+
     const user = UserUpdate.create(dto);
+    console.log(user.toValueObject());
     if (!user) throw new ErrorUpdateException(id);
     return await this.userRepository.update(user, id);
   }

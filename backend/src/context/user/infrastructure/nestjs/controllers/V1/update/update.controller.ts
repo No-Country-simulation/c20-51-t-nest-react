@@ -11,7 +11,9 @@ import { V1_ROUTES } from '../../routes';
 import { UserUpdateUseCase } from 'src/context/user/application/userUpdate/userUpdate.service';
 import { UserUpdateDto } from './update.dto';
 import { ErrorUpdateException } from 'src/context/user/domain/errors/errorUpdate.exception';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags(V1_ROUTES.NAME)
 @Controller(V1_ROUTES.BASE)
 export class UpdateController {
   constructor(private readonly userUpdateUseCase: UserUpdateUseCase) {}

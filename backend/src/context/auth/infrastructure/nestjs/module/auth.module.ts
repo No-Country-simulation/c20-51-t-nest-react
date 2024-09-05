@@ -8,6 +8,8 @@ import { SignInController } from '../controllers/V1/signin/signIn.controller';
 import { SignUpController } from '../controllers/V1/signup/signUp.controller';
 import { AuthDomainRepository } from 'src/context/auth/domain/repository/authdomain.repository';
 import { AuthRepository } from '../../repository/auth.repository';
+import { GenerateToken } from '../../generateToken/generateToken';
+import { HashPasswordAndCompare } from '../../hashPassword/hashPassword';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), JwtConfigModule],
@@ -16,6 +18,8 @@ import { AuthRepository } from '../../repository/auth.repository';
     SignUpService,
     SignInService,
     AuthRepository,
+    GenerateToken,
+    HashPasswordAndCompare,
     {
       provide: AuthDomainRepository,
       useExisting: AuthRepository,

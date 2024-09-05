@@ -13,6 +13,7 @@ export class User {
       name: this.attributes.name,
       email: this.attributes.email,
       image_url: this.attributes.image_url,
+      birthdate: this.attributes.birthdate,
       phone: this.attributes.phone,
       country: this.attributes.country,
     };
@@ -24,5 +25,13 @@ export class User {
 
   get email(): string {
     return this.attributes.email;
+  }
+
+  get passraw(): string {
+    return this.attributes.password;
+  }
+
+  get role(): string {
+    return this.attributes.role;
   }
 }

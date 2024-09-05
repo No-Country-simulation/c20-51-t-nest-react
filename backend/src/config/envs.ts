@@ -8,6 +8,7 @@ interface Env {
   USERDB: string;
   PASSDB: string;
   DATABASE: string;
+  JWT_SECRET: string;
 }
 const envsSchema = joi
   .object({
@@ -17,6 +18,7 @@ const envsSchema = joi
     USERDB: joi.string().required(),
     PASSDB: joi.string().required(),
     DATABASE: joi.string().required(),
+    JWT_SECRET: joi.string().required(),
   })
   .unknown(true);
 

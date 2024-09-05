@@ -32,9 +32,9 @@ export class UserRepository extends UsersRepository {
     return User.create(user);
   }
   async update(user: UserUpdate, id: string): Promise<string> {
-    const updated = await this.userRepository.update(user.toValueObject(), {
-      id,
-    });
+    console.log('ingresando a update');
+
+    const updated = await this.userRepository.update(id, user.toValueObject());
     if (updated.affected === 0) throw new ErrorUpdateException(id);
     return `Usuario con el id ${id} actualizado exitosamente`;
   }

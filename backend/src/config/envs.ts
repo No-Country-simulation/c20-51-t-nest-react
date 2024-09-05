@@ -3,10 +3,20 @@ import * as joi from 'joi';
 
 interface Env {
   PORT: number;
+  HOSTDB: string;
+  PORTDB: number;
+  USERDB: string;
+  PASSDB: string;
+  DATABASE: string;
 }
 const envsSchema = joi
   .object({
     PORT: joi.number().required(),
+    HOSTDB: joi.string().required(),
+    PORTDB: joi.number().required(),
+    USERDB: joi.string().required(),
+    PASSDB: joi.string().required(),
+    DATABASE: joi.string().required(),
   })
   .unknown(true);
 

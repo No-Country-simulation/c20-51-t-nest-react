@@ -11,4 +11,5 @@ export const configdb: TypeOrmModuleOptions = {
   database: envs.DATABASE,
   entities: [User],
   synchronize: true,
+  logging: true,
 };

@@ -2,6 +2,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PayloadJwt } from './interface';
 import { User } from '../../domain/entities/newuser/user.entity';
 import { Injectable } from 'src/utils/injectNest/inject';
+import { envs } from 'src/config/envs';
 
 @Injectable()
 export class GenerateToken {
@@ -16,5 +17,12 @@ export class GenerateToken {
     return {
       token: token,
     };
+  }
+
+  async validateToken(token: string): Promise<PayloadJwt> {
+    const currentUser = token?.split(' ')[1];
+    return await this.jwtService.verify(currentUser, {
+      secret: envs.JWT_SECRET,
+    });
   }
 }

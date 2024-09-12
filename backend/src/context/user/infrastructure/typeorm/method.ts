@@ -16,6 +16,12 @@ export class MethodBasicDB {
     return user;
   }
 
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+
   async findAll(): Promise<User[]> {
     const users = await this.userRepository.find();
     return users;
@@ -26,8 +32,8 @@ export class MethodBasicDB {
     return newUser;
   }
 
-  async update(id: string, user: IUserUpdate): Promise<string> {
-    const updatedUser = await this.userRepository.update(id, user);
+  async update(email: string, user: IUserUpdate): Promise<string> {
+    const updatedUser = await this.userRepository.update(email, user);
     if (updatedUser.affected === 0)
       throw new BadRequestException('User not found');
     return 'User updated successfully';

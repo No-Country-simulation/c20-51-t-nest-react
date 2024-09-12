@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { User } from '../../typeorm/user.entitie';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeleteController } from '../controllers/V1/delete/delete.controller';
@@ -11,7 +11,9 @@ import { FindByIdController } from '../controllers/V1/findById/findById.controll
 import { UserFindOneByIdUseCase } from 'src/context/user/application/userFindOneById/userFindOnebyId.service';
 import { UpdateController } from '../controllers/V1/update/update.controller';
 import { UserUpdateUseCase } from 'src/context/user/application/userUpdate/userUpdate.service';
+import { MethodBasicDB } from '../../typeorm/method';
 
+@Global()
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [
@@ -26,7 +28,9 @@ import { UserUpdateUseCase } from 'src/context/user/application/userUpdate/userU
     UserFindOneByIdUseCase,
     UserRepository,
     UserUpdateUseCase,
+    MethodBasicDB,
     { provide: UsersRepository, useExisting: UserRepository },
   ],
+  exports: [MethodBasicDB],
 })
 export class UserModule {}

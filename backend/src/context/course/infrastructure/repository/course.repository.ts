@@ -1,23 +1,25 @@
-import { Repository } from 'typeorm';
 import { Course } from '../../domain/entities/new/course.entitie';
-import { Course as CourseDB } from '../typeorm/entities/course.entittie';
 import { CourseRepository } from '../../domain/repository/course.repository';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateCourse } from '../../domain/entities/update/update.entitie';
 import { ErrorCreateCourse } from '../../domain/errors/ErrorCreateCourse.exception';
 import { RelationsMethodExternal } from 'src/context/user/infrastructure/adapterExternal/methodExternal';
+import { BasicMethod } from '../typeorm/repository/basicmethod';
+import { Injectable } from 'src/utils/injectNest/inject';
+import { GenerateToken } from 'src/context/auth/infrastructure/generateToken/generateToken';
 
+@Injectable()
 export class CourseExternalRepository extends CourseRepository {
   constructor(
-    @InjectRepository(CourseDB)
-    private readonly courseRepository: Repository<CourseDB>,
+    private readonly courseRepository: BasicMethod,
     private readonly userRepository: RelationsMethodExternal,
+    private readonly verifyToken: GenerateToken,
   ) {
     super();
   }
-  async create(course: Course, id: string): Promise<string> {
-    const newCourse = this.courseRepository.create(course.toValueObject());
-    const user = await this.userRepository.Authors(id, newCourse);
+  async create(course: Course, token: string): Promise<string> {
+    const newCourse = await this.courseRepository.create(course);
+    const payload = await this.verifyToken.validateToken(token);
+    const user = await this.userRepository.Authors(payload.sub, newCourse);
     const createdCourse = await this.courseRepository.save({
       ...newCourse,
       author: user,
@@ -27,8 +29,19 @@ export class CourseExternalRepository extends CourseRepository {
     }
     return 'Curso creado correctamente';
   }
-  delete(id: string): Promise<string> {}
-  findAll(): Promise<Course[]> {}
-  findById(id: string): Promise<Course> {}
-  update(course: UpdateCourse): Promise<string> {}
+
+  async delete(id: string): Promise<string> {
+    const deletedCourse = await this.courseRepository.delete(id);
+    return deletedCourse;
+  }
+  async findAll(): Promise<Course[]> {
+    return await this.courseRepository.findAll();
+  }
+
+  async findById(id: string): Promise<Course> {
+    return await this.courseRepository.findById(id);
+  }
+  async update(course: UpdateCourse, id: string): Promise<string> {
+    return await this.courseRepository.update(course, id);
+  }
 }

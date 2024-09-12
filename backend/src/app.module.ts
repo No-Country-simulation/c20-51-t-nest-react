@@ -4,8 +4,16 @@ import { configdb } from './config/db';
 import * as morgan from 'morgan';
 import { UserModule } from './context/user/infrastructure/nestjs/module/user.module';
 import { AuthModule } from './context/auth/infrastructure/nestjs/module/auth.module';
+import { JwtConfigModule } from './config/jwt.module';
+import { CourseModule } from './context/course/infrastructure/nestjs/module/course.module';
 @Module({
-  imports: [TypeOrmModule.forRoot(configdb), UserModule, AuthModule],
+  imports: [
+    TypeOrmModule.forRoot(configdb),
+    UserModule,
+    AuthModule,
+    JwtConfigModule,
+    CourseModule,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

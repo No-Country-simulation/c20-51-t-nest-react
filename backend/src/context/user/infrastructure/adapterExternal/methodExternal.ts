@@ -8,11 +8,11 @@ import { User } from '../typeorm/user.entitie';
 export class RelationsMethodExternal {
   constructor(private readonly userRepository: MethodBasicDB) {}
 
-  async Authors(id: string, course: Course): Promise<User> {
-    const user = await this.userRepository.findById(id);
+  async Authors(email: string, course: Course): Promise<User> {
+    const user = await this.userRepository.findByEmail(email);
     if (!user) throw new NotFoundException('User not found');
     user.courses.push(course);
-    const updated = await this.userRepository.update(id, user);
+    const updated = await this.userRepository.update(email, user);
     if (!updated) throw new BadRequestException('User not found');
     return user;
   }

@@ -1,8 +1,12 @@
+import { Course } from 'src/context/course/infrastructure/typeorm/entities/course.entittie';
 import { Role } from 'src/utils/enum/role.enum';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -30,6 +34,11 @@ export class User {
   birthdate?: string;
   @Column({ nullable: true })
   country?: string;
+  @ManyToOne(() => Course, (course) => course.author)
+  courses: Course[];
+  @ManyToMany(() => Course)
+  @JoinTable()
+  mycoursesPayed: Course[];
   @CreateDateColumn({ type: 'timestamp' })
   createdAt?: Date;
   @UpdateDateColumn({ type: 'timestamp' })

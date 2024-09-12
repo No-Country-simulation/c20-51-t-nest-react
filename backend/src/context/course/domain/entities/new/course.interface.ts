@@ -3,7 +3,7 @@ export interface ICourse {
   name: string;
   description: string;
   price: number;
-  author: string; // TODO: Luego cambiarlo por la interface de la clase de autor
+  author: IAuthor; // TODO: Luego cambiarlo por la interface de la clase de autor
   category: string; // TODO: Luego cambiarlo por la interface de la categoría
   reviews: number; // TODO: Luego cambiarlo por la interface de la clase de reviews
   duration: string;
@@ -11,4 +11,18 @@ export interface ICourse {
   image_url: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+interface IAuthor {
+  id: string;
+  name: string;
+  email: string;
+  password?: string;
+  role?: string;
+  image_url?: string;
+  phone?: number;
+  birthdate?: string;
+  country?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

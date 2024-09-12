@@ -1,4 +1,4 @@
-import { ICourseUpdate } from './updateCourse.entitie';
+import { ICourseUpdate } from './updateCourse.interface';
 
 export class UpdateCourse {
   constructor(private readonly attributes: ICourseUpdate) {}

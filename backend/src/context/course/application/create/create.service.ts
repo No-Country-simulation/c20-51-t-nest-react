@@ -6,9 +6,9 @@ import { CourseRepository } from '../../domain/repository/course.repository';
 export class CreateCourseService {
   constructor(private readonly repository: CourseRepository) {}
 
-  async run(course: ICourse): Promise<string> {
+  async run(course: ICourse, id: string): Promise<string> {
     const courseInstance = Course.create(course);
-    const newCourse = await this.repository.create(courseInstance);
+    const newCourse = await this.repository.create(courseInstance, id);
     if (!newCourse) {
       throw new ErrorCreateCourse('Error al crear el curso');
     }

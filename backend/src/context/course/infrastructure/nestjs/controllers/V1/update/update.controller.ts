@@ -19,7 +19,9 @@ export class UpdateCourseController {
   @Put(V1_ROUTES.COURSE.UPDATE)
   async update(@Param('id') id: string, @Body() dto: UpdateCourseDto) {
     try {
-      return await this.updateService.run(id, dto);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { category, ...course } = dto;
+      return await this.updateService.run(id, course);
     } catch (error) {
       if (error instanceof ErrorUpdateCourse) {
         throw new BadRequestException(error.message);

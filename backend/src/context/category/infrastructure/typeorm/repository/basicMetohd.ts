@@ -12,9 +12,9 @@ export class MethodBasicDB {
     private readonly categoryRepository: Repository<CategoryDB>,
   ) {}
   async create(category: Category): Promise<CategoryDB> {
-    const newCategory = await this.categoryRepository.save(
-      category.toValueObject(),
-    );
+    const newCategory = await this.categoryRepository.save({
+      name: category.name,
+    });
     if (!newCategory) {
       throw new BadRequestException('Error al crear el curso');
     }
@@ -37,7 +37,31 @@ export class MethodBasicDB {
     }
     return category;
   }
-  async update(category: Category, id: string): Promise<string> {
-    throw new Error('Method not implemented.');
+
+  async findByName(name: string): Promise<CategoryDB> {
+    const category = await this.categoryRepository.findOneBy({ name });
+    if (!category) {
+      throw new NotFoundException('No se encuentra el curso');
+    }
+    return category;
+  }
+
+  async update(category: CategoryDB, name: string): Promise<string> {
+    const updatedCategory = await this.categoryRepository.update(
+      name,
+      category,
+    );
+    if (!updatedCategory) {
+      throw new BadRequestException('Error al actualizar el curso');
+    }
+    return 'Category updated';
+  }
+
+  async save(category: CategoryDB): Promise<CategoryDB> {
+    const savedCategory = await this.categoryRepository.save(category);
+    if (!savedCategory) {
+      throw new BadRequestException('Error al actualizar el curso');
+    }
+    return savedCategory;
   }
 }

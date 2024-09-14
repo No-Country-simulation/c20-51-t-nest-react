@@ -6,6 +6,7 @@ import { UserModule } from './context/user/infrastructure/nestjs/module/user.mod
 import { AuthModule } from './context/auth/infrastructure/nestjs/module/auth.module';
 import { JwtConfigModule } from './config/jwt.module';
 import { CourseModule } from './context/course/infrastructure/nestjs/module/course.module';
+import { CategoryModule } from './context/category/infrastructure/nestjs/module/category.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(configdb),
@@ -13,6 +14,7 @@ import { CourseModule } from './context/course/infrastructure/nestjs/module/cour
     AuthModule,
     JwtConfigModule,
     CourseModule,
+    CategoryModule,
   ],
 })
 export class AppModule implements NestModule {

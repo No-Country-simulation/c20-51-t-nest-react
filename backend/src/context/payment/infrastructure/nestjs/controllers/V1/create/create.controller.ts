@@ -9,7 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { CreatePaymentService } from 'src/context/payment/application/create/create.service';
 import { ErrorCreatePayment } from 'src/context/payment/domain/errors/errorCreate.exception';
-import { V1_ROUTES } from '../routes';
+import { V1_ROUTES } from '../../routes';
 import { CreatePaymentDto } from './create.dto';
 
 @ApiTags(V1_ROUTES.NAME)

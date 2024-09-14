@@ -9,7 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { FindByIdPaymentService } from 'src/context/payment/application/findById/findById.service';
 import { NotFoundPayment } from 'src/context/payment/domain/errors/notFound.exception';
-import { V1_ROUTES } from '../routes';
+import { V1_ROUTES } from '../../routes';
 
 @ApiTags(V1_ROUTES.NAME)
 @Controller(V1_ROUTES.BASE)

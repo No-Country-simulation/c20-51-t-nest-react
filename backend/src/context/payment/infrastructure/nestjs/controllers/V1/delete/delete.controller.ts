@@ -9,7 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { DeletePaymentService } from 'src/context/payment/application/delete/delete.service';
 import { ErrorDeletePayment } from 'src/context/payment/domain/errors/errorDelete.exception';
-import { V1_ROUTES } from '../routes';
+import { V1_ROUTES } from '../../routes';
 
 @ApiTags(V1_ROUTES.NAME)
 @Controller(V1_ROUTES.BASE)

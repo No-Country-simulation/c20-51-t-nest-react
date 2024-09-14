@@ -1,7 +1,7 @@
 import { Controller, Get, BadRequestException } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FindAllPaymentService } from 'src/context/payment/application/findAll/findAll.service';
-import { V1_ROUTES } from '../routes';
+import { V1_ROUTES } from '../../routes';
 
 @ApiTags(V1_ROUTES.NAME)
 @Controller(V1_ROUTES.BASE)

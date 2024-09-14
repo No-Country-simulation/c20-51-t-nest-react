@@ -1,8 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CreatePaymentController } from '../controllers/create/create.controller';
-import { DeletePaymentController } from '../controllers/delete/delete.controller';
-import { FindAllPaymentController } from '../controllers/findAll/findAll.controller';
-import { FindByIdPaymentController } from '../controllers/findById/findById.controller';
 import { CreatePaymentService } from 'src/context/payment/application/create/create.service';
 import { DeletePaymentService } from 'src/context/payment/application/delete/delete.service';
 import { FindAllPaymentService } from 'src/context/payment/application/findAll/findAll.service';
@@ -14,6 +10,10 @@ import { DbRepository } from '../../typeorm/repository/db.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Payment } from '../../typeorm/entitie/payment.entitie';
 import { GenerateToken } from 'src/context/auth/infrastructure/generateToken/generateToken';
+import { CreatePaymentController } from '../controllers/V1/create/create.controller';
+import { DeletePaymentController } from '../controllers/V1/delete/delete.controller';
+import { FindAllPaymentController } from '../controllers/V1/findAll/findAll.controller';
+import { FindByIdPaymentController } from '../controllers/V1/findById/findById.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Payment])],

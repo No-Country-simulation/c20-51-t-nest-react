@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtConfigModule } from 'src/config/jwt.module';
 import { SignInService } from 'src/context/auth/application/signIn/signIn.service';
 import { SignUpService } from 'src/context/auth/application/signup/signup.service';
 import { User } from 'src/context/user/infrastructure/typeorm/user.entitie';
@@ -12,7 +11,7 @@ import { GenerateToken } from '../../generateToken/generateToken';
 import { HashPasswordAndCompare } from '../../hashPassword/hashPassword';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), JwtConfigModule],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [SignInController, SignUpController],
   providers: [
     SignUpService,

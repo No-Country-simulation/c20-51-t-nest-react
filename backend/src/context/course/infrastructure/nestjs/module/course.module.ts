@@ -19,14 +19,13 @@ import { UserModule } from 'src/context/user/infrastructure/nestjs/module/user.m
 import { RelationsMethodExternal } from 'src/context/user/infrastructure/adapterExternal/methodExternal';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Course])],
+  imports: [TypeOrmModule.forFeature([Course]), UserModule],
   controllers: [
     DeleteCourseController,
     FindAllCourseController,
     FindByIdCourseController,
     CreateCourseController,
     UpdateCourseController,
-    UserModule,
   ],
   providers: [
     UpdateCourseService,

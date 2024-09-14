@@ -1,9 +1,11 @@
+import { Category } from 'src/context/category/infrastructure/typeorm/category.entitie';
 import { User } from 'src/context/user/infrastructure/typeorm/user.entitie';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -23,7 +25,8 @@ export class Course {
   author: User;
   @ManyToMany(() => User, (user) => user.mycoursesPayed)
   usersAcquired: User[];
-  category: string; // TODO: Luego cambiarlo por la interface de la categoría
+  @ManyToOne(() => Category, (category) => category.courses)
+  category: Category;
   reviews: number; // TODO: Luego cambiarlo por la interface de la clase de reviews
   @Column()
   duration: string;

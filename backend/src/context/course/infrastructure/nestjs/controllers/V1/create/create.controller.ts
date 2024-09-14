@@ -25,7 +25,8 @@ export class CreateCourseController {
   ) {
     if (!token) throw new UnauthorizedException('Token no encontrado');
     try {
-      return await this.createService.run(dto, token);
+      const { category, ...course } = dto;
+      return await this.createService.run(course, token, category);
     } catch (error) {
       if (error instanceof ErrorCreateCourse) {
         throw new BadRequestException(error.message);

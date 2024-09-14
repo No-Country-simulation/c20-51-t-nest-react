@@ -6,6 +6,7 @@ import { RelationsMethodExternal } from 'src/context/user/infrastructure/adapter
 import { BasicMethod } from '../typeorm/repository/basicmethod';
 import { Injectable } from 'src/utils/injectNest/inject';
 import { GenerateToken } from 'src/context/auth/infrastructure/generateToken/generateToken';
+import { RelationsRepository } from 'src/context/category/infrastructure/repository/relations.repository';
 
 @Injectable()
 export class CourseExternalRepository extends CourseRepository {
@@ -13,16 +14,26 @@ export class CourseExternalRepository extends CourseRepository {
     private readonly courseRepository: BasicMethod,
     private readonly userRepository: RelationsMethodExternal,
     private readonly verifyToken: GenerateToken,
+    private readonly categoryRepository: RelationsRepository,
   ) {
     super();
   }
-  async create(course: Course, token: string): Promise<string> {
+  async create(
+    course: Course,
+    token: string,
+    categoryName: string,
+  ): Promise<string> {
     const newCourse = await this.courseRepository.create(course);
     const payload = await this.verifyToken.validateToken(token);
     const user = await this.userRepository.Authors(payload.sub, newCourse);
+    const category = await this.categoryRepository.categoryForCourse(
+      newCourse,
+      categoryName,
+    );
     const createdCourse = await this.courseRepository.save({
       ...newCourse,
       author: user,
+      category: category,
     });
     if (!createdCourse) {
       throw new ErrorCreateCourse('Error al crear el curso');

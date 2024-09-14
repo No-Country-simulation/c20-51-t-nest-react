@@ -30,7 +30,11 @@ export class BasicMethod {
   }
 
   async save(course: Course): Promise<Course> {
-    return await this.repository.save(course);
+    const savedCourse = await this.repository.save(course);
+    if (!savedCourse) {
+      throw new BadRequestException('Error al actualizar el curso');
+    }
+    return savedCourse;
   }
 
   async update(course: UpdateCourse, id: string): Promise<string> {
@@ -50,5 +54,9 @@ export class BasicMethod {
       throw new BadRequestException('Error al eliminar el curso');
     }
     return 'Curso eliminado correctamente';
+  }
+
+  async relations() {
+    return await this.repository.find();
   }
 }

@@ -17,9 +17,11 @@ import { BasicMethod } from '../../typeorm/repository/basicmethod';
 import { GenerateToken } from 'src/context/auth/infrastructure/generateToken/generateToken';
 import { UserModule } from 'src/context/user/infrastructure/nestjs/module/user.module';
 import { RelationsMethodExternal } from 'src/context/user/infrastructure/adapterExternal/methodExternal';
+import { RelationsRepository } from 'src/context/category/infrastructure/repository/relations.repository';
+import { CategoryModule } from 'src/context/category/infrastructure/nestjs/module/category.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Course]), UserModule],
+  imports: [TypeOrmModule.forFeature([Course]), UserModule, CategoryModule],
   controllers: [
     DeleteCourseController,
     FindAllCourseController,
@@ -37,6 +39,7 @@ import { RelationsMethodExternal } from 'src/context/user/infrastructure/adapter
     BasicMethod,
     GenerateToken,
     RelationsMethodExternal,
+    RelationsRepository,
     {
       provide: CourseRepository,
       useExisting: CourseExternalRepository,

@@ -1,4 +1,5 @@
 import { Course } from 'src/context/course/infrastructure/typeorm/entities/course.entittie';
+import { Payment } from 'src/context/payment/infrastructure/typeorm/entitie/payment.entitie';
 import { Role } from 'src/utils/enum/role.enum';
 import {
   Column,
@@ -7,6 +8,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -17,7 +19,7 @@ export class User {
   id: string;
   @Column()
   name: string;
-  @Column()
+  @Column({ unique: true })
   email: string;
   @Column({ nullable: true })
   password: string;
@@ -34,6 +36,8 @@ export class User {
   birthdate?: string;
   @Column({ nullable: true })
   country?: string;
+  @OneToMany(() => Payment, (payment) => payment.user)
+  payments: Payment[];
   @ManyToOne(() => Course, (course) => course.author)
   courses: Course[];
   @ManyToMany(() => Course)

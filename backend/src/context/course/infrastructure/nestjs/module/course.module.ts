@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Course } from '../../typeorm/entities/course.entittie';
 import { CreateCourseController } from '../controllers/V1/create/create.controller';
@@ -15,13 +15,12 @@ import { CourseRepository } from 'src/context/course/domain/repository/course.re
 import { CourseExternalRepository } from '../../repository/course.repository';
 import { BasicMethod } from '../../typeorm/repository/basicmethod';
 import { GenerateToken } from 'src/context/auth/infrastructure/generateToken/generateToken';
-import { UserModule } from 'src/context/user/infrastructure/nestjs/module/user.module';
 import { RelationsMethodExternal } from 'src/context/user/infrastructure/adapterExternal/methodExternal';
 import { RelationsRepository } from 'src/context/category/infrastructure/repository/relations.repository';
-import { CategoryModule } from 'src/context/category/infrastructure/nestjs/module/category.module';
 
+@Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Course]), UserModule, CategoryModule],
+  imports: [TypeOrmModule.forFeature([Course])],
   controllers: [
     DeleteCourseController,
     FindAllCourseController,
@@ -45,5 +44,6 @@ import { CategoryModule } from 'src/context/category/infrastructure/nestjs/modul
       useExisting: CourseExternalRepository,
     },
   ],
+  exports: [BasicMethod],
 })
 export class CourseModule {}

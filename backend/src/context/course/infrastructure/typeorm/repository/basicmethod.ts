@@ -5,6 +5,7 @@ import { Course as CourseEntity } from 'src/context/course/domain/entities/new/c
 import { Repository } from 'typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { UpdateCourse } from 'src/context/course/domain/entities/update/update.entitie';
+import { ICourse } from 'src/context/course/domain/entities/new/course.interface';
 
 @Injectable()
 export class BasicMethod {
@@ -56,7 +57,20 @@ export class BasicMethod {
     return 'Curso eliminado correctamente';
   }
 
-  async relations() {
-    return await this.repository.find();
+  async findCoursesById(courses: ICourse[]): Promise<Course[]> {
+    const coursesInDB = await Promise.all(
+      courses.map(async (course) => {
+        const courseUpdated = await this.repository
+          .createQueryBuilder()
+          .setFindOptions({
+            where: { id: course.id },
+          })
+          .getOne();
+        return courseUpdated;
+      }),
+    );
+    return coursesInDB.filter(
+      (course) => course !== null && course !== undefined,
+    );
   }
 }

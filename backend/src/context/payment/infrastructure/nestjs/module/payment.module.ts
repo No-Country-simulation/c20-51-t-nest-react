@@ -14,6 +14,11 @@ import { CreatePaymentController } from '../controllers/V1/create/create.control
 import { DeletePaymentController } from '../controllers/V1/delete/delete.controller';
 import { FindAllPaymentController } from '../controllers/V1/findAll/findAll.controller';
 import { FindByIdPaymentController } from '../controllers/V1/findById/findById.controller';
+import { StripeRepository } from '../../stripe/stripe.repository';
+import { CancelPaymentController } from '../controllers/V1/cancel/cancel.controller';
+import { SucessPaymentController } from '../controllers/V1/sucess/sucess.controller';
+import { SuccessPaymentService } from 'src/context/payment/application/sucess/sucess.service';
+import { CancelPaymentService } from 'src/context/payment/application/cancel/cancel.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Payment])],
@@ -22,6 +27,8 @@ import { FindByIdPaymentController } from '../controllers/V1/findById/findById.c
     FindAllPaymentController,
     FindByIdPaymentController,
     DeletePaymentController,
+    SucessPaymentController,
+    CancelPaymentController,
   ],
   providers: [
     CreatePaymentService,
@@ -32,6 +39,9 @@ import { FindByIdPaymentController } from '../controllers/V1/findById/findById.c
     RelationsRepository,
     DbRepository,
     GenerateToken,
+    SuccessPaymentService,
+    CancelPaymentService,
+    StripeRepository,
     {
       provide: PaymentRepository,
       useExisting: PaymentExternalRepository,

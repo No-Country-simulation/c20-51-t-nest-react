@@ -3,6 +3,7 @@ import { Injectable } from 'src/utils/injectNest/inject';
 import { Payment as PaymentDB } from '../entitie/payment.entitie';
 import { Repository } from 'typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { PaymentStatus } from 'src/utils/enum/payments.enum';
 
 @Injectable()
 export class DbRepository {
@@ -38,5 +39,18 @@ export class DbRepository {
       throw new BadRequestException('Error al eliminar el pago');
     }
     return 'Payment deleted successfully';
+  }
+
+  async updateStatusPayment(
+    id: string,
+    status: PaymentStatus,
+  ): Promise<string> {
+    const paymentUpdated = await this.paymentRepository.update(id, {
+      status: status,
+    });
+    if (!paymentUpdated) {
+      throw new BadRequestException('Error al actualizar el pago');
+    }
+    return 'Payment updated successfully';
   }
 }

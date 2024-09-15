@@ -6,12 +6,14 @@ import { RelationsRepository } from './relations.repository';
 import { ErrorCreatePayment } from '../../domain/errors/errorCreate.exception';
 import { ErrorDeletePayment } from '../../domain/errors/errorDelete.exception';
 import { NotFoundPayment } from '../../domain/errors/notFound.exception';
+import { StripeRepository } from '../stripe/stripe.repository';
 
 @Injectable()
 export class PaymentExternalRepository extends PaymentRepository {
   constructor(
     private readonly dbRepository: DbRepository,
     private readonly relationsRepository: RelationsRepository,
+    private readonly stripeRepository: StripeRepository,
   ) {
     super();
   }
@@ -27,8 +29,16 @@ export class PaymentExternalRepository extends PaymentRepository {
       throw new ErrorCreatePayment('Error al crear el pago');
     }
     await this.relationsRepository.relationsUserPayment(newPayment, user);
-    return 'Payment created successfully';
+    return await this.stripeRepository.createPayment(newPayment);
   }
+
+  async updateStatusPayment(id: string, status: string): Promise<string> {
+    if (status === 'PAID') {
+      return await this.stripeRepository.sucessPayment(id);
+    }
+    return await this.stripeRepository.cancelPayment(id);
+  }
+
   async delete(id: string): Promise<string> {
     const deletedPayment = await this.dbRepository.delete(id);
     if (!deletedPayment) {

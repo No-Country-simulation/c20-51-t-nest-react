@@ -5,5 +5,7 @@ export const V1_ROUTES = {
     FIND_ONE: ':id',
     UPDATE: ':id',
     DELETE: ':id',
+    SUCCESS: 'success/:id',
+    CANCEL: 'cancel/:id',
   },
 };
